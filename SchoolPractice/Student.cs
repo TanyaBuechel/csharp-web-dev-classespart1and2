@@ -33,5 +33,51 @@ namespace SchoolPractice
         {
             nextStudentId++;
         }
+
+        public void AddGrade(int courseCredits, double grade)
+        {
+            // Update the appropriate fields: NumberOfCredits, Gpa
+            //Reference fields with PropertyNames
+            double totalQualityScore = Gpa * NumberOfCredits;
+            totalQualityScore += courseCredits * grade;
+            NumberOfCredits += courseCredits;
+            Gpa = totalQualityScore / NumberOfCredits;
+        }
+
+        public string GetGradeLevel(int credits)
+        {
+            // Determine the grade level of the student based on NumberOfCredits
+            if (credits <= 29)
+            {
+                return "Freshman";
+            }
+            else if (credits <= 59)
+            {
+                return "Sophomore";
+            }
+            else if (credits <= 89)
+            {
+                return "Junior";
+            }
+            else
+            {
+                return "Senior";
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Student student &&
+                   Name == student.Name &&
+                   StudentId == student.StudentId &&
+                   NumberOfCredits == student.NumberOfCredits &&
+                   Gpa == student.Gpa;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Name, StudentId, NumberOfCredits, Gpa);
+        }
     }
+
 }
